@@ -1,0 +1,976 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Basic React</title>
+</head>
+<body>
+    <a href="reactDom.html"> chapitre4:BASIC REACT</a> 
+    <h1>Basics in React</h1>
+    <p>The chapter will guide you through the basics of React. It covers state and interactions in
+        components, because static components are a bit dull, aren’t they? Additionally, you will learn about
+        the different ways to declare a component and how to keep components composable and reusable.
+        Be prepared to breathe life into your components.</p>
+        <h2>Internal Component State</h2>
+        <p>Internal component state, also known as local state, allows you to save, modify and delete properties
+            that are stored in your component. The ES6 class component can use a constructor to initialize
+            internal component state later on. The constructor is called only once when the component
+            initializes.
+            Let’s introduce a class constructor.</p>
+    <p>src/App.js</p>
+    <pre>class App extends Component {
+        constructor(props) {
+        super(props);
+        }
+        ...
+        }</pre>
+        <p>When having a constructor in your ES6 class component, it is mandatory to call super(); because
+            the App component is a subclass of Component. Hence the extends Component in your App
+            component declaration. You will learn more about ES6 class components later on.
+            You can call super(props); as well. It sets this.props in your constructor in case you want to
+            access them in the constructor. Otherwise, when accessing this.props in your constructor, they
+            would be undefined. You will learn more about the props of a React component later on.
+            Now, in your case, the initial state in your component should be the sample list of items.</p>
+<p>src/App.js</p>
+<pre>
+    const list = [
+{
+title: 'React',
+url: 'https://facebook.github.io/react/',
+author: 'Jordan Walke',
+num_comments: 3,
+points: 4,
+objectID: 0,
+},
+...
+];
+class App extends Component {
+    constructor(props) {
+    super(props);
+    this.state = {
+    list: list,
+    };
+    }
+    ...
+    }
+</pre>
+<p>The state is bound to the class by using the this object. Thus you can access the local state in your
+    whole component. For instance, it can be used in the render() method. Previously you have mapped
+    a static list of items in your render() method that was defined outside of your component. Now
+    you are about to use the list from your local state in your component.</p>
+    <pre>
+        class App extends Component {
+            ...
+            render() {
+            return (
+            &lt;div className="App"&gt;
+            {this.state.list.map(item =&gt;
+            &lt;div key={item.objectID}&gt;
+            &lt;span&gt;
+            &lt;a href={item.url}&gt;{item.title}&lt;/a&gt;
+            &lt;/span&gt;
+            &lt;span&gt;{item.author}&lt;/span&gt;
+            &lt;span&gt;{item.num_comments}&lt;/span&gt;
+            &lt;span&gt;{item.points}&lt;/span&gt;
+            &lt;/div&gt;
+            )}
+            &lt;/div&gt;
+            );
+            }
+            }
+    </pre>
+    <p>
+        The list is part of the component now. It resides in the internal component state. You could add
+items, change items or remove items in and from your list. Every time you change your component
+state, the render() method of your component will run again. That’s how you can simply change
+your internal component state and be sure that the component re-renders and displays the correct
+data that comes from the local state.
+But be careful. Don’t mutate the state directly. You have to use a method called setState() to modify
+your state. You will get to know it in a following chapter.
+    </p>
+    <h1>ES6 Object Initializer</h1>
+    <p>In JavaScript ES6, you can use a shorthand property syntax to initialize your objects more concisely.
+        Imagine the following object initialization:</p>
+        <p>Code Playground</p>
+        <pre>const name = 'Robin';
+            const user = {
+            name: name,
+            };</pre>
+    <p>When the property name in your object is the same as your variable name, you can do the following:</p>
+    <p>Code Playground</p>
+    <pre>
+        const name = 'Robin';
+const user = {
+name,
+};
+    </pre>
+    <p>In your application, you can do the same. The list variable name and the state property name share
+        the same name.</p>
+        <pre>
+            // ES5
+this.state = {
+list: list,
+};
+// ES6
+this.state = {
+list,
+};
+        </pre>
+    <p>Another neat helper are shorthand method names. In JavaScript ES6, you can initialize methods in
+        an object more concisely.</p>
+        <p>Code Playground</p>
+        <pre>
+            // ES5
+var userService = {
+getUserName: function (user) {
+return user.firstname + ' ' + user.lastname;
+},
+};
+// ES6
+const userService = {
+getUserName(user) {
+return user.firstname + ' ' + user.lastname;
+},
+};
+        </pre>
+        <p>Last but not least, you are allowed to use computed property names in JavaScript ES6.</p>
+        <p>Code Playground</p>
+        <pre>
+            // ES5
+var user = {
+name: 'Robin',
+};
+// ES6
+const key = 'name';
+const user = {
+[key]: 'Robin',
+};
+        </pre>
+        <p>Perhaps computed property names make no sense for you yet. Why should you need them? In a later
+            chapter, you will come to a point where you can use them to allocate values by key in a dynamic
+            way in an object. It’s neat to generate lookup tables in JavaScript.</p>
+        <h2>Unidirectional Data Flow</h2>
+        <p>Now you have some internal state in your App component. However, you have not manipulated
+            the local state yet. The state is static and thus is the component. A good way to experience state
+            manipulation is to have some component interaction.
+            Let’s add a button for each item in the displayed list. The button says “Dismiss” and is going to
+            remove the item from the list. It could be useful eventually when you only want to keep a list of
+            unread items and dismiss the items that you are not interested in.</p>
+<pre>
+    class App extends Component {
+        ...
+        render() {
+        return (
+        &lt;div className="App"&gt;
+        {this.state.list.map(item =&gt;
+        &lt;div key={item.objectID}&gt;
+        &lt;span&gt;
+        &lt;a href={item.url}&gt;{item.title}&lt;/a&gt;
+        &lt;/span&gt;
+        &lt;span&gt;{item.author}&lt;/span&gt;
+        &lt;span&gt;{item.num_comments}&lt;/span&gt;
+        &lt;span&gt;{item.points}&lt;/span&gt;
+        &lt;span&gt;
+        &lt;button
+        onClick={() => this.onDismiss(item.objectID)}
+        type="button"
+        &gt;
+        Dismiss
+        &lt;/button&gt;
+        &lt;/span&gt;
+        &lt;/div&gt;
+        )}
+        &lt;/div&gt;
+        );
+        }
+        }
+</pre>
+<p>The onDismiss() class method is not defined yet. We will do it in a moment, but for now the focus
+    should be on the onClick handler of the button element. As you can see, the onDismiss() method</p>
+    <p>
+        in the onClick handler is enclosed by another function. It is an arrow function. That way, you can
+sneak in the objectID property of the item object to identify the item that will be dismissed. An
+alternative way would be to define the function outside of the onClick handler and only pass the
+defined function to the handler. A later chapter will explain the topic of handlers in elements in
+more detail.
+Did you notice the multilines for the button element? Note that elements with multiple attributes
+get messy as one line at some point. That’s why the button element is used with multilines and
+indentations to keep it readable. But it is not mandatory. It is only a code style recommendation that
+I highly recommend.
+Now you have to implement the onDismiss() functionality. It takes an id to identify the item to
+dismiss. The function is bound to the class and thus becomes a class method. That’s why you access
+it with this.onDismiss() and not onDismiss(). The this object is your class instance. In order to
+define the onDismiss() as class method, you have to bind it in the constructor. Bindings will be
+explained in another chapter later on.
+    </p>
+    <p>src/App.js</p>
+    <pre>
+        class App extends Component {
+            constructor(props) {
+            super(props);
+            this.state = {
+            list,
+            };
+            this.onDismiss = this.onDismiss.bind(this);
+            }
+            render() {
+            ...
+            }
+            }
+    </pre>
+    <p>In the next step, you have to define its functionality, the business logic, in your class. Class methods
+        can be defined the following way.</p>
+        <p>src/App.js</p>
+        <pre>
+            class App extends Component {
+                constructor(props) {
+                super(props);
+                this.state = {
+                list,
+                };
+                this.onDismiss = this.onDismiss.bind(this);
+                }
+                onDismiss(id) {
+                ...
+                }
+                render() {
+                ...
+                }
+                }
+        </pre>
+        <p>Now you are able to define what happens inside of the class method. Basically you want to remove
+            the item identified by the id from the list and store an updated list to your local state. Afterward,
+            the updated list will be used in the re-running render() method to display it. The removed item
+            shouldn’t appear anymore.
+            You can remove an item from a list by using the JavaScript built-in filter functionality. The filter
+            function takes a function as input. The function has access to each value in the list, because it iterates
+            over the list. That way, you can evaluate each item in the list based on a filter condition. If the
+            evaluation for an item is true, the item stays in the list. Otherwise it will be filtered from the list.
+            Additionally, it is good to know that the function returns a new list and doesn’t mutate the old list.
+            It supports the convention in React of having immutable data structures.</p>
+            <p>src/App.js</p>
+            <pre>
+                onDismiss(id) {
+                    const updatedList = this.state.list.filter(function isNotId(item) {
+                    return item.objectID !== id;
+                    });
+                    }
+            </pre>
+            <p>In the next step, you can extract the function and pass it to the filter function.</p>
+<p>src/App.js</p>
+<pre>
+    onDismiss(id) {
+        function isNotId(item) {
+        return item.objectID !== id;
+        }
+        const updatedList = this.state.list.filter(isNotId);
+        }
+</pre>
+<p>In addition, you can do it more concisely by using a JavaScript ES6 arrow function again.</p>
+<p>src/App.js</p>
+<pre>
+    onDismiss(id) {
+        const isNotId = item => item.objectID !== id;
+        const updatedList = this.state.list.filter(isNotId);
+        }
+</pre>
+<p>You could even inline it again, like you did in the onClick handler of the button, but it might get
+    less readable.</p>
+    <p>src/App.js </p>
+    <pre>
+        onDismiss(id) {
+            const updatedList = this.state.list.filter(item => item.objectID !== id);
+            }
+    </pre>
+    <p>The list removes the clicked item now. However the state isn’t updated yet. Therefore you can finally
+        use the setState() class method to update the list in the internal component state.</p>
+<p>src/App.js</p>
+<pre>
+    onDismiss(id) {
+        const isNotId = item => item.objectID !== id;
+        const updatedList = this.state.list.filter(isNotId);
+        this.setState({ list: updatedList });
+        }
+</pre>
+<p>
+    Now run again your application and try the “Dismiss” button. It should work. What you experience
+now is the unidirectional data flow in React. You trigger an action in your view with onClick(),
+a function or class method modifies the internal component state and the render() method of the
+component runs again to update the view.
+</p>
+<h2>Bindings</h2>
+<p>It is important to learn about bindings in JavaScript classes when using React ES6 class components.
+    In the previous chapter, you have bound your class method onDismiss() in the constructor.</p>
+    <p>src/App.js</p>
+    <pre>
+        class App extends Component {
+            constructor(props) {
+            super(props);
+            this.state = {
+            list,
+            };
+            this.onDismiss = this.onDismiss.bind(this);
+            }
+            ...
+            }
+    </pre>
+    <p>Why would you do that in the first place? The binding step is necessary, because class methods don’t
+        automatically bind this to the class instance. Let’s demonstrate it with the help of the following ES6
+        class component.</p>
+        <p>Code Playground</p>
+        <pre>
+            class ExplainBindingsComponent extends Component {
+                onClickMe() {
+                console.log(this);
+                }
+                render() {
+                return (
+                &lt;button
+                onClick={this.onClickMe}
+                type="button"
+                &gt;
+                Click Me
+                &lt;/button&gt;
+                );
+                }
+                }
+        </pre>
+        <p>
+            The component renders just fine, but when you click the button, you will get undefined in your
+developer console log. That’s a main source of bugs when using React, because if you want to access
+this.state in your class method, it cannot be retrieved because this is undefined. So in order to
+make this accessible in your class methods, you have to bind the class methods to this.
+In the following class component the class method is properly bound in the class constructor.
+        </p>
+        <p>Code Playground</p>
+        <pre>
+            class ExplainBindingsComponent extends Component {
+                constructor() {
+                super();
+                this.onClickMe = this.onClickMe.bind(this);
+                }
+                onClickMe() {
+                console.log(this);
+                }
+                render() {
+                return (
+                &lt;button
+                onClick={this.onClickMe}
+                type="button"
+                &gt;
+                Click Me
+                &lt;/button&gt;
+                );
+                }
+                }
+        </pre>
+        <p>When trying the button again, the this object, to be more specific the class instance, should be
+            defined and you would be able to access this.state, or as you will later learn this.props, now.
+            The class method binding can happen somewhere else too. For instance, it can happen in the
+            render() class method.</p>
+            <p>Code Playground</p>
+            <pre>
+class ExplainBindingsComponent extends Component {
+                    onClickMe() {
+                    console.log(this);
+                    }
+                    render() {
+                    return (
+                   &lt;button&gt;
+                    onClick={this.onClickMe.bind(this)}
+                    type="button"
+                    &gt;
+                    Click Me
+                   &/button&gt;
+                    );
+                    }
+                    }
+            </pre>
+            <p>But you should avoid it, because it would bind the class method every time when the render()
+                method runs. Basically it runs every time your component updates which leads to performance
+                implications. When binding the class method in the constructor, you bind it only once in the
+                beginning when the component is instantiated. That’s a better approach to do it.
+                Another thing people sometimes come up with is defining the business logic of their class methods
+                in the constructor.</p>
+ <pre>
+                    class ExplainBindingsComponent extends Component {
+                        constructor() {
+                        super();
+                        this.onClickMe = () => {
+                        console.log(this);
+                        }
+                        }
+                        render() {
+                        return (
+                        &lt;button
+                        onClick={this.onClickMe}
+                        type="button"&gt;
+                        Click Me
+&lt;/button&gt;
+);
+}
+}
+</pre>
+<p>
+    You should avoid it too, because it will clutter your constructor over time. The constructor is only
+there to instantiate your class with all its properties. That’s why the business logic of class methods
+should be defined outside of the constructor.
+</p>
+<pre>
+    class ExplainBindingsComponent extends Component {
+        constructor() {
+        super();
+        this.doSomething = this.doSomething.bind(this);
+        this.doSomethingElse = this.doSomethingElse.bind(this);
+        }
+        doSomething() {
+        // do something
+        }
+        doSomethingElse() {
+        // do something else
+        }
+        ...
+        }
+</pre>
+<p>
+    Last but not least, it is worth to mention that class methods can be autobound automatically without
+binding them explicitly by using JavaScript ES6 arrow functions.
+</p>
+<pre>
+    class ExplainBindingsComponent extends Component {
+        onClickMe = () => {
+        console.log(this);
+        }
+        render() {
+        return (
+        &lt;button
+        onClick={this.onClickMe}
+        type="button"
+        &gt;
+        Click Me
+        &lt;/button&gt;
+        );
+        }
+        }
+</pre>
+<p>If the repetitive binding in the constructor annoys you, you can go ahead with this approach instead.
+    The official React documentation sticks to the class method bindings in the constructor. That’s why
+    the book will stick to those as well.</p>
+    <h2>Event Handler</h2>
+    <p>The chapter should give you a deeper understanding of event handlers in elements. In your
+        application, you are using the following button element to dismiss an item from the list.</p>
+        <p>src/App.js</p>
+        <pre>
+            ...
+&lt;button
+onClick={() => this.onDismiss(item.objectID)}
+type="button"
+&gt;
+Dismiss
+&lt;/button&gt;
+...
+        </pre>
+        <p>
+            That’s already a complex use case, because you have to pass a value to the class method and thus you
+have to wrap it into another (arrow) function. So basically, it has to be a function that is passed to
+the event handler. The following code wouldn’t work, because the class method would be executed
+immediately when you open the application in the browser.
+        </p>
+    <p>src/App.js</p>
+    <pre>
+        ...
+&lt;button
+onClick={this.onDismiss(item.objectID)}
+type="button"
+&gt;
+Dismiss
+&lt;/button&gt;
+...
+    </pre>
+    <p>When using onClick={doSomething()}, the doSomething() function would execute immediately
+        when you open the application in your browser. The expression in the handler is evaluated. Since
+        the returned value of the function isn’t a function anymore, nothing would happen when you click
+        the button. But when using onClick={doSomething} whereas doSomething is a function, it would
+        be executed when clicking the button. The same rules apply for the onDismiss() class method that
+        is used in your application.</p>
+        <p>However, using onClick={this.onDismiss} wouldn’t suffice, because somehow the item.objectID
+            property needs to be passed to the class method to identify the item that is going to be dismissed.
+            That’s why it can be wrapped into another function to sneak in the property. The concept is called
+            higher-order functions in JavaScript and will be explained briefly later on.</p>
+            <p>src/App.js</p>
+            <pre>
+                ...
+&lt;button
+onClick={() => this.onDismiss(item.objectID)}
+type="button"
+&gt;
+Dismiss
+&lt;/button&gt;
+...
+            </pre>
+    <p>A workaround would be to define the wrapping function somewhere outside and only pass the
+        defined function to the handler. Since it needs access to the individual item, it has to live in the
+        inside of the map function block.</p>
+        <p>src/App.js</p>
+        <pre>
+            class App extends Component {
+                ...
+                render() {
+                return (
+               &lt;div className="App"&gt;
+                {this.state.list.map(item => {
+                const onHandleDismiss = () =>
+                this.onDismiss(item.objectID);
+                return (
+               &lt;div key={item.objectID}&gt;
+               &lt;span&gt;
+               &lt;a href={item.url}&gt;{item.title}&gt;/a&gt;
+               &lt;/span&gt;
+               &lt;span&gt;{item.author}&gt;/span&gt;
+               &lt;span&gt;{item.num_comments}&gt;/span&gt;
+               &lt;span&gt;{item.points}&gt;/span&gt;
+               &lt;span&gt;
+            &lt;button onClick={onHandleDismiss} type="button"&gt; Dismiss &lt;/button&gt; &lt;/span&gt; &lt;/div&gt;
+);
+}
+)}
+&lt;/div&gt;
+);
+}
+}
+        </pre>
+    <p>After all, it has to be a function that is passed to the element’s handler. As an example, try this code
+        instead:</p>
+        <pre>
+            class App extends Component {
+                ...
+                render() {
+                return (
+                &lt;div className="App"&gt;
+                {this.state.list.map(item =>
+                ...
+                &lt;span&gt;
+                &lt;button
+                onClick={console.log(item.objectID)}
+                type="button"
+                &gt;
+                Dismiss
+                &lt;/button&gt;
+                &lt;/span&gt;
+                &lt;/div&gt;
+                )}
+                &lt;/div&gt;
+                );}
+            }
+        </pre>
+        <p>It will run when you open the application in the browser but not when you click the button. Whereas
+            the following code would only run when you click the button. It is a function that is executed when
+            you trigger the handler.</p>
+    <p>src/App.js</p>
+    <pre>...
+        &lt;button
+        onClick={function () {
+        console.log(item.objectID)
+        }}
+        type="button"
+        &gt;
+        Dismiss
+        &lt;/button&gt;
+        ...</pre>
+        <p>In order to keep it concise, you can transform it into a JavaScript ES6 arrow function again. That’s
+            what we did with the onDismiss() class method too.</p>
+            <p>src/App.js</p>
+            <pre>...
+                &lt;button
+                onClick={() => console.log(item.objectID)}
+                type="button"
+                &gt;
+                Dismiss
+                &lt;/button&gt;
+                ...</pre>
+    <p>
+        Often newcomers to React have difficulties with the topic of using functions in event handlers.
+That’s why I tried to explain it in more detail here. In the end, you should end up with the following
+code in your button to have a concisely inlined JavaScript ES6 arrow function that has access to the
+objectID property of the item object.
+    </p>
+    <p>src/App.js</p>
+    <pre>
+        class App extends Component {
+            ...
+            render() {
+            return (
+           &lt;div className="App"&gt;
+            {this.state.list.map(item =>
+           &lt;div key={item.objectID}>
+            ...
+           &lt;span>
+           &lt;button
+            onClick={() => this.onDismiss(item.objectID)}
+            type="button"
+            >
+            Dismiss
+           &lt;/button>
+           &lt;/span>
+           &lt;/div>
+            )}
+           &lt;/div>
+            );
+            }
+            }
+    </pre>
+    <p>Another performance relevant topic, that is often mentioned, are the implications of using arrow
+        functions in event handlers. For instance, the onClick handler for the onDismiss() method is
+        wrapping the method in another arrow function to be able to pass the item identifier. So every
+        time the render() method runs, the handler instantiates the higher-order arrow function. It can
+        have an impact on your application performance, but in most cases you will not notice it. Imagine
+        you have a huge table of data with 1000 items and each row or column has such an arrow function
+        in an event handler. Then it is worth to think about the performance implications and therefore you
+        could implement a dedicated Button component to bind the method in the constructor. But before
+        that happens it is premature optimization. It is more valuable to focus on learning React itself.</p>
+        <h2>Interactions with Forms and Events</h2>
+        <p>Let’s add another interaction for the application to experience forms and events in React. The
+            interaction is a search functionality. The input of the search field should be used to temporarily
+            filter your list based on the title property of an item.
+            In the first step, you are going to define a form with an input field in your JSX.</p>
+            <p>src/App.js</p>
+            <pre>
+                class App extends Component {
+                    ...
+                    render() {
+                    return (
+                    &lt;div className="App">
+                    &lt;form>
+                    &lt;input type="text" />
+                    &lt;/form>
+                    {this.state.list.map(item =>
+                    ...
+                    )}
+                    &lt;/div>
+                    );
+                    }
+                    }
+            </pre>
+    <p>In the following scenario you will type into the input field and filter the list temporarily by the
+        search term that is used in the input field. To be able to filter the list based on the value of the input
+        field, you need to store the value of the input field in your local state. But how do you access the
+        value? You can use synthetic events in React to access the event payload.
+        Let’s define a onChange handler for the input field.</p>
+        <p>src/App.js</p>
+        <pre>
+            class App extends Component {
+                ...
+                render() {
+                return (
+               &lt;div className="App">
+               &lt;form>
+               &lt;input
+                type="text"
+                onChange={this.onSearchChange}
+                />
+               &lt;/form>
+                ...
+               &lt;/div>
+                );
+                }
+                }
+        </pre>
+        <p>The function is bound to the component and thus a class method again. You have to bind and define
+            the method.</p>
+            <p>src/App.js</p>
+            <pre>
+                class App extends Component {
+                    constructor(props) {
+                    super(props);
+                    this.state = {
+                    list,
+                    };
+                    this.onSearchChange = this.onSearchChange.bind(this);
+                    this.onDismiss = this.onDismiss.bind(this);
+                    }
+                    onSearchChange() {
+                    ...
+                    }
+                    ...
+            </pre>
+            <p>When using a handler in your element, you get access to the synthetic React event in your callback
+                function’s signature.</p>
+        <p>src/App.js</p>
+        <pre>
+            class App extends Component {
+                ...
+                onSearchChange(event) {
+                ...
+                }
+                ...
+                }
+        </pre>
+        <p>
+            The event has the value of the input field in its target object. Hence you are able to update the local
+state with the search term by using this.setState() again
+        </p>
+        <pre>
+            class App extends Component {
+                ...
+                onSearchChange(event) {
+                this.setState({ searchTerm: event.target.value });
+                }
+                ...
+                }
+        </pre>
+        <p>Additionally, you shouldn’t forget to define the initial state for the searchTerm property in the
+            constructor. The input field should be empty in the beginning and thus the value should be an
+            empty string.</p>
+    <p>src/App.js</p>
+    <pre>
+        class App extends Component {
+            constructor(props) {
+            super(props);
+            this.state = {
+            list,
+            searchTerm: '',
+            };
+            this.onSearchChange = this.onSearchChange.bind(this);
+            this.onDismiss = this.onDismiss.bind(this);
+            }
+            ...
+            }
+    </pre>
+    <p>
+        Now you store the input value to your internal component state every time the value in the input
+field changes.
+A brief note about updating the local state in a React component. It would be fair to assume that when
+updating the searchTerm with this.setState() the list needs to be passed as well to preserve it. But
+that isn’t the case. React’s this.setState() is a shallow merge. It preserves the sibling properties
+in the state object when updating one sole property in it. Thus the list state, even though you have
+already dismissed an item from it, would stay the same when updating the searchTerm property.
+Let’s get back to your application. The list isn’t filtered yet based on the input field value that is
+stored in the local state. Basically you have to filter the list temporarily based on the searchTerm.
+You have everything you need to filter it. So how to filter it temporarily now? In your render()
+method, before you map over the list, you can apply a filter on it. The filter would only evaluate
+if the searchTerm matches title property of the item. You have already used the built-in JavaScript
+filter functionality, so let’s do it again. You can sneak in the filter function before the map function,
+because the filter function returns a new array and thus the map function can be used on it in such
+a convenient way.
+    </p>
+    <p>src/App.js</p>
+    <pre>class App extends Component {
+        ...
+        render() {
+        return (
+       &lt;div className="App">
+       &lt;form>
+       &lt;input
+        type="text"
+        onChange={this.onSearchChange}
+        />
+       &lt;/form>
+        {this.state.list.filter(...).map(item =>
+        ...
+        )}
+       &lt;/div>
+        );
+        }
+        }</pre>
+        <p>Let’s approach the filter function in a different way this time. We want to define the filter argument,
+            the function that is passed to the filter function, outside of the ES6 class component. There we don’t
+            have access to the state of the component and thus we have no access to the searchTerm property
+            to evaluate the filter condition. We have to pass the searchTerm to the filter function and have to
+            return a new function to evaluate the condition. That’s called a higher-order function.
+            Normally I wouldn’t mention higher-order functions, but in a React book it makes total sense. It
+            makes sense to know about higher-order functions, because React deals with a concept called higherorder
+            components. You will get to know the concept later in the book. Now again, let’s focus on the
+            filter functionality.
+            First, you have to define the higher-order function outside of your App component.</p>
+            <p>src/App.js</p>
+            <pre>function isSearched(searchTerm) {
+                return function(item) {
+                // some condition which returns true or false
+                }
+                }
+                class App extends Component {
+                ...
+                }</pre>
+    <p>The function takes the searchTerm and returns another function, because after all the filter function
+        takes a function as its input. The returned function has access to the item object because it is the
+        function that is passed to the filter function. In addition, the returned function will be used to filter
+        the list based on the condition defined in the function. Let’s define the condition.</p>
+        <p>src/App.js</p>
+    <pre>
+        function isSearched(searchTerm) {
+            return function(item) {
+            return item.title.toLowerCase().includes(searchTerm.toLowerCase());
+            }
+            }
+            class App extends Component {
+            ...
+            }
+    </pre>
+    <p>The condition says that you match the incoming searchTerm pattern with the title property of the
+        item from your list. You can do that with the built-in includes JavaScript functionality. Only when
+        the pattern matches, you return true and the item stays in the list. When the pattern doesn’t match
+        the item is removed from the list. But be careful with pattern matching: You shouldn’t forget to
+        lower case both strings. Otherwise there will be mismatches between a search term ‘redux’ and an
+        item title ‘Redux’. Since we are working on a immutable list and return a new list by using the filter
+        function, the original list in the local state isn’t modified at all.
+        One thing is left to mention: We cheated a bit by using the built-in includes JavaScript functionality.
+        It is already an ES6 feature. How would that look like in JavaScript ES5? You would use the indexOf()
+        function to get the index of the item in the list. When the item is in the list, indexOf() will return
+        its index in the array.</p>
+        <p>Code Playground</p>
+        <pre>// ES5
+            string.indexOf(pattern) !== -1
+            // ES6
+            string.includes(pattern)</pre>
+    <p>Another neat refactoring can be done with an ES6 arrow function again. It makes the function more
+        concise:</p>
+        <pre>
+            // ES5
+function isSearched(searchTerm) {
+return function(item) {
+return item.title.toLowerCase().indexOf(searchTerm.toLowerCase()) !== -1;
+}
+}
+// ES6
+const isSearched = searchTerm => item =>
+item.title.toLowerCase().includes(searchTerm.toLowerCase());
+        </pre>
+        <p>One could argue which function is more readable. Personally I prefer the second one. The React
+            ecosystem uses a lot of functional programming concepts. It happens often that you will use a
+            function which returns a function (higher-order functions). In JavaScript ES6, you can express these
+            more concisely with arrow functions.
+            Last but not least, you have to use the defined isSearched() function to filter your list. You pass it
+            the searchTerm property from your local state, it returns the filter input function, and filters your
+            list based on the filter condition. Afterward it maps over the filtered list to display an element for
+            each list item.</p>
+            <p>src/App.js</p>
+            <pre>
+                class App extends Component {
+                    ...
+                    render() {
+                    return (
+                   &lt;div className="App">
+                   &lt;form>
+                   &lt;input
+                    type="text"
+                    onChange={this.onSearchChange}
+                    />
+                   &lt;/form>
+                    {this.state.list.filter(isSearched(this.state.searchTerm)).map(item =>
+                    ...
+                    )}
+                   &lt;/div>
+                    );
+                    }
+                    }
+            </pre>
+    <p>The search functionality should work now. Try it yourself in the browser.</p>
+    <h2>ES6 Destructuring</h2>
+    <p>There is a way in JavaScript ES6 for an easier access to properties in objects and arrays. It’s called
+        destructuring. Compare the following snippet in JavaScript ES5 and ES6.</p>
+        <p>Code Playground</p>
+        <pre>
+            const user = {
+                firstname: 'Robin',
+                lastname: 'Wieruch',
+                };
+                // ES5
+                var firstname = user.firstname;
+                var lastname = user.lastname;
+                console.log(firstname + ' ' + lastname);
+                // output: Robin Wieruch
+                // ES6
+                const { firstname, lastname } = user;
+                console.log(firstname + ' ' + lastname);
+                // output: Robin Wieruch
+        </pre>
+        <p>While you have to add an extra line each time you want to access an object property in JavaScript
+            ES5, you can do it in one line in JavaScript ES6. A best practice for readability is to use multilines
+            when you destructure an object into multiple properties.</p>
+            <pre>
+                const {
+                    firstname,
+                    lastname
+                    } = user;
+            </pre>
+    <p>The same goes for arrays. You can destructure them too. Again, multilines will keep your code
+        scannable and readable.</p>
+        <pre>
+            const users = ['Robin', 'Andrew', 'Dan'];
+const [
+userOne,
+userTwo,
+userThree
+] = users;
+console.log(userOne, userTwo, userThree);
+// output: Robin Andrew Dan
+        </pre>
+        <p>Perhaps you have noticed that the local state object in the App component can get destructured the
+            same way. You can shorten the filter and map line of code.</p>
+            <p>src/App.js</p>
+    <pre>render() {
+        const { searchTerm, list } = this.state;
+        return (
+        &lt;div className="App">
+        ...
+        {list.filter(isSearched(searchTerm)).map(item =>
+        ...
+        )}
+        &lt;/div>
+        );</pre>
+        <p>You can do it the ES5 or ES6 way:</p>
+        <pre>
+            // ES5
+var searchTerm = this.state.searchTerm;
+var list = this.state.list;
+// ES6
+const { searchTerm, list } = this.state;
+        </pre>
+<p>But since the book uses JavaScript ES6 most of the time, you should stick to it.</p>
+<h2>Controlled Components</h2>
+<P>You already learned about the unidirectional data flow in React. The same law applies for the input
+    field, which updates the local state with the searchTerm in order to filter the list. When the state
+    changes, the render() method runs again and uses the recent searchTerm from the local state to
+    apply the filter condition.
+    But didn’t we forget something in the input element? A HTML input tag comes with a value
+    attribute. The value attribute usually has the value that is shown in the input field. In this case
+    it would be the searchTerm property. However, it seems like we don’t need that in React.
+    That’s wrong. Form elements such as &lt;input>, &lt;textarea> and &lt;select> hold their own state in
+    plain HTML. They modify the value internally once someone changes it from the outside. In React
+    that’s called an uncontrolled component, because it handles its own state. In React, you should
+    make sure to make those elements controlled components.
+    How should you do that? You only have to set the value attribute of the input field. The value is
+    already saved in the searchTerm state property. So why not access it from there?</P>
+    <pre>class App extends Component {
+        ...
+        render() {
+        const { searchTerm, list } = this.state;
+        return (
+        &lt;div className="App">
+        &lt;form>
+        &lt;input
+        type="text"
+        value={searchTerm}
+        onChange={this.onSearchChange}
+        />
+        &lt;/form>
+        ...
+        &lt;/div>
+        );
+        }
+        }</pre>
+<p>That’s it. The unidirectional data flow loop for the input field is self-contained now. The internal
+    component state is the single source of truth for the input field.</p>
+    <p>The whole internal state management and unidirectional data flow might be new to you. But once
+        you are used to it, it will be your natural flow to implement things in React. In general, React
+        brought a novel pattern with the unidirectional data flow to the world of single page applications.
+        It is adopted by several frameworks and libraries by now.</p>
+        <h2>Split Up Components</h2>
+        <p>You have one large App component now. It keeps growing and can become confusing eventually.
+            You can start to split it up into chunks of smaller components.
+            Let’s start to use a component for the search input and a component for the list of items.</p>
+</body>
+</html>

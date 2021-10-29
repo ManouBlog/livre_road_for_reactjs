@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>es6</title>
+</head>
+<body>
+    <a href="jsx.html"> chapitre2:Introduction to JSX</a> 
+    <h1>ES6 const and let</h1>
+    <P>
+        I guess you noticed that we declared the variable helloWorld with a var statement. JavaScript ES6
+comes with two more options to declare your variables: const and let. In JavaScript ES6, you will
+rarely find var anymore.
+A variable declared with const cannot be re-assigned or re-declared. It cannot get mutated (changed,
+modified). You embrace immutable data structures by using it. Once the data structure is defined,
+you cannot change it.
+    </P>
+    <P>Code Playground</P>
+    <pre>// not allowed
+        const helloWorld = 'Welcome to the Road to learn React';
+        helloWorld = 'Bye Bye React';</pre>
+        <p>A variable declared with let can get mutated.</p>
+        <pre>// allowed
+            let helloWorld = 'Welcome to the Road to learn React';
+            helloWorld = 'Bye Bye React';</pre>
+            <p>
+                You would use it when you would need to re-assign a variable.
+However, you have to be careful with const. A variable declared with const cannot get modified.
+But when the variable is an array or object, the value it holds can get updated. The value it holds is
+not immutable.
+            </p>
+            <p>Code Playground</p>
+   <pre>
+    // allowed
+    const helloWorld = {
+    text: 'Welcome to the Road to learn React'
+    };
+    helloWorld.text = 'Bye Bye React';
+   </pre>      
+   <p>
+    But when to use each declaration? There are different opinions about the usage. I suggest using
+    const whenever you can. It indicates that you want to keep your data structure immutable even
+    though values in objects and arrays can get modified. If you want to modify your variable, you can
+    use let.
+    Immutability is embraced in React and its ecosystem. That’s why const should be your default
+    choice when you define a variable. Still, in complex objects the values within can get modified. Be
+    careful about this behavior.
+    In your application, you should use const over var.
+   </p>   
+   <p>src/App.js</p>
+   <pre>
+    import React, { Component } from 'react';
+    import './App.css';
+    class App extends Component {
+    render() {
+    const helloWorld = 'Welcome to the Road to learn React';
+    return (
+    &lt;div className="App"&gt;
+    &lt;h2&gt;{helloWorld}&lt;/h2&gt;
+    &lt;/div&gt;
+    );
+    }
+    }
+    export default App;
+   </pre>
+   <a href="reactDom.html"> chapitre4:ReactDOM</a>
+</body>
+</html>

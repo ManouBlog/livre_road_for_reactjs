@@ -1,0 +1,24 @@
+body{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+h1,h2,h3,h4{
+    text-align: center;
+}
+p{
+    width:80%;
+    margin:1em auto;
+    font-size:1.3em;
+}
+pre{
+    width: 90%;
+    margin:auto;
+    background: grey;
+    padding: 1em 0;
+    font-size: 1.3em;
+    font-weight: bold;
+    overflow:auto;
+}
+ul li{
+    width:80%;
+    margin:auto;
+}

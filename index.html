@@ -1,0 +1,405 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>REACT JS</title>
+</head>
+<body>
+    <h1>Foreword</h1>
+    <p>
+The Road to learn React teaches you the fundamentals of React. You will build a real world
+application along the way in plain React without complicated tooling. Everything from project setup
+to deployment on a server will be explained for you. The book comes with additional referenced
+reading material and exercises with each chapter. After reading the book, you will be able to build
+your own applications in React. The material is kept up to date by me and the community.
+In the Road to learn React, I want to offer a foundation before you start to dive into the broader React
+ecosystem. It has less tooling and less external state management, but a lot of information about
+React. It explains general concepts, patterns and best practices in a real world React application.
+You will learn to build your own React application. It covers real world features like pagination,
+client-side caching and interactions such as searching and sorting. Additionally, you will transition
+from JavaScript ES5 to JavaScript ES6 along the way. I hope this book captures my enthusiasm for
+React and JavaScript and helps you to get started with it.
+    </p>
+    <h1>About the Author</h1>
+    <p>
+        Robin Wieruch is a german software and web engineer who is dedicated to learn and teach
+programming in JavaScript. After graduating from university with a masters degree in computer
+science, he hasn’t stopped learning every day on his own. His experiences from the startup world,
+where he used JavaScript excessively during his professional time and spare time, gave him the
+opportunity to teach others about these topics.
+    </p>
+    <p>
+        For a few years, Robin worked closely with a great team of engineers at a company called Small
+Improvements on a large scale application. The company builds a SaaS product enabling customers to
+create a feedback culture at their company. Under the hood, the application worked with JavaScript
+in the frontend and Java in the backend. In the frontend, the first iteration was written in Java with
+the Wicket Framework and jQuery. When the first generation of SPAs became popular, the company
+migrated to Angular 1.x for the frontend application. After using Angular for more than 2 years, it
+became clear that Angular wasn’t the best solution to work with state intense applications back in
+the days. That’s why the company made the final jump to React and Redux that has enabled it to
+operate on a large scale successfully.
+    </p>
+    <p>
+        During his time in the company, Robin regularly wrote articles about web development on his
+personal website. He noticed that people would give him great feedback on his articles that allowed
+him to improve his writing and teaching style. Article after article, Robin grew in his ability to teach
+others. Whereas the first article was packed with too much stuff that could be quite overwhelming
+for students, the articles improved over time by focussing and teaching only one subject.
+Nowadays, Robin is self-employed to teach others. He finds it a fulfilling activity to see students
+thrive by giving them clear objectives and a short feedback loop. That’s one thing you would learn
+at a feedback company, wouldn’t you? But without coding himself he wouldn’t be able to teach
+things. That’s why he invests his remaining time in programming. You can find more information
+about Robin and ways to support and work with him on his website1.
+    </p>
+    <h1>How to read it?</h1>
+    <p>
+        The book is my attempt to teach React while you will write an application. It is a practical guide to
+learn React and not a reference work about React. You will write a Hacker News application that
+interacts with a real world API. Among several interesting topics, it covers state management in
+React, caching and interactions (sorting and searching). On the way you will learn best practices
+and patterns in React.
+In addition, the book gives you a transition from JavaScript ES5 to JavaScript ES6. React embraces
+a lot of JavaScript ES6 features and I want to show you how you can use them.
+In general, each chapter of the book will build up on the previous chapter. Each chapter will teach you
+something new. Don’t rush through the book. You should internalize each step. You could apply your
+own implementations and read more about the topic. After each chapter I give you some reading
+material and exercises. If you really want to learn React, I highly recommend to read the extra
+material and do some hands on exercises. After you have read a chapter, make yourself comfortable
+with the learnings before you continue.
+In the end, you will have a complete React application in production. I am very keen to see your
+results, so please text me when you have finished the book. The final chapter of the book will give
+you a handful of options to continue your React journey. In general you will find a lot of React
+related topics on my personal website28.
+Since you are reading the book, I guess you are new to React. That’s perfect. In the end, I hope to
+get your feedback to improve the material to enable everyone to learn React. You can have a direct
+impact on GitHub29 or text me on Twitter30.
+    </p>
+    <h1>
+        Introduction to React
+    </h1>
+    <p>
+        The chapter gives you an introduction to React. You may ask yourself: Why should I learn React in
+the first place? The chapter might give you the answer to that question. Afterward, you will dive into
+the ecosystem by bootstrapping your first React application from scratch with zero-configuration.
+Along the way, you will get an introduction to JSX and ReactDOM. So be prepared for your first
+React components.
+    </p>
+    <h1>
+        Hi, my name is React.
+    </h1>
+    <p>
+        Why should you bother to learn React? In recent years single page applications (SPA31) have
+become popular. Frameworks like Angular, Ember and Backbone helped JavaScript developers to
+build modern web applications beyond the usage of vanilla JavaScript and jQuery. The list of
+these popular solutions is not exhaustive. There exists a wide range of SPA frameworks. When
+you consider the release dates, most of them are among the first generation of SPAs: Angular 2010,
+Backbone 2010 and Ember 2011.
+The initial React release was 2013 by Facebook. React is not an SPA framework but a view library. It
+is the V in the MVC32 (model view controller). It only enables you to render components as viewable
+elements in a browser. Yet the whole ecosystem around React makes it possible to build single page
+applications.
+But why should you consider using React over the first generation of SPA frameworks? While the
+first generation of frameworks tried to solve a lot of things at once, React only helps you to build
+your view layer. It’s a library and not a framework. The idea behind it: Your view is a hierarchy of
+composable components.
+In React you can keep the focus on your view layer before you introduce more aspects to your
+application. Every other aspect is another building block for your SPA. These building blocks are
+essential to build a mature application. They come with two advantages.
+First, you can learn the building blocks step by step. You don’t have to worry about understanding
+them altogether. It is different from a framework that gives you every building block from the start.
+This book focuses on React as the first building block. More building blocks follow eventually.
+Second, all building blocks are interchangeable. It makes the ecosystem around React such an
+innovative place. Multiple solutions are competing with each other. You can pick the most appealing
+solution for you and your use case.
+The first generation of SPA frameworks arrived at an enterprise level. They are more rigid. React
+stays innovative and gets adopted by multiple tech thought leader companies like Airbnb, Netflix
+and of course Facebook33. All of them invest in the future of React and are content with React and
+the ecosystem itself.
+React is probably one of the best choices for building modern web applications nowadays. It only
+delivers the view layer, but the React ecosystem is a whole flexible and interchangeable framework34.
+React has a slim API, an amazing ecosystem and a great community. You can read about my
+experiences why I moved from Angular to React35. I highly recommend to have an understanding
+why you would choose React over another framework or library. After all, everyone is keen to
+experience where React will lead us in the next years.
+    </p>
+    <h1>Requirements</h1>
+    <p>
+        If you are coming from a different SPA framework or library, you should already be familiar with the
+basics of web development. If you have just started in web development, you should feel comfortable
+with HTML, CSS and JavaScript ES5 to learn React. The book will smoothly transition to JavaScript
+ES6 and beyond. I encourage you to join the official Slack Group39 for the book to get help or to help
+others.
+    </p>
+    <h1>
+        Editor and Terminal
+    </h1>
+    <p>
+        What about the development environment? You will need a running editor or IDE and terminal
+(command line tool). You can follow my setup guide40. It is adjusted for MacOS users, but you can
+substitute most of the tools for other operating system. There is a ton of articles out there that will
+show you how to setup a web development environment in a more elaborated way for your OS.
+Optionally, you can use git and GitHub on your own, while conducting the exercises in the book, to
+keep your projects and the progress in repositories on GitHub. There exists a little guide41 on how
+to use these tools. But once again, it is not mandatory for the book and can be overwhelming when
+learning everything from scratch. So you can skip it if you are a newcomer in web development to
+focus on the essential parts taught in this book.
+    </p>
+    <h1>
+        Node and NPM
+    </h1>
+    <P>
+        Last but not least, you will need an installation of node and npm42. Both are used to manage libraries
+you will need along the way. In this book, you will install external node packages via npm (node
+package manager). These node packages can be libraries or whole frameworks.
+You can verify your versions of node and npm on the command line. If you don’t get any output in
+the terminal, you need to install node and npm first. These are only my versions during the time
+writing this book:
+    </P>
+    <p>
+        Command Line
+    </p>
+    <pre>
+        node --version
+       *v8.9.4 <br>
+      npm --version
+      *v5.6.0
+    </pre>
+    <h1>node and npm</h1>
+    <p>
+        This chapter gives you a little crash course in node and npm. It is not exhaustive, but you will get
+all the necessary tools. If you are familiar with both of them, you can skip the chapter.
+The node package manager (npm) allows you to install external node packages from the command
+line. These packages can be a set of utility functions, libraries or whole frameworks. They are the
+dependencies of your application. You can either install these packages to your global node package
+folder or to your local project folder.
+Global node packages are accessible from everywhere in the terminal and you have to install them
+only once to your global directory. You can install a global package by typing in your terminal:
+    </p>
+    <p>Command Line</p>
+    <pre>
+        npm install -g &lt;package&gt;
+    </pre>
+    <p>
+        The -g flag tells npm to install the package globally. Local packages are used in your application.
+For instance, React as a library will be a local package which can be required in your application for
+usage. You can install it via the terminal by typing:
+    </p>
+    <p>Command Line</p>
+    <pre>npm install &lt;package&gt;</pre>
+    <p>In the case of React it would be:</p>
+    <p>
+        Command Line
+    </p>
+    <pre>npm install react</pre>
+    <p>
+        The installed package will automatically appear in a folder called node_modules/ and will be listed
+in the package.json file next to your other dependencies.
+But how to initialize the node_modules/ folder and the package.json file for your project in the first
+place? There is a npm command to initialize a npm project and thus a package.json file. Only when
+you have that file, you can install new local packages via npm.
+    </p>
+    <p>Command Line</p>
+    <pre>
+        npm init -y
+    </pre>
+    <p>
+        The -y flag is a shortcut to initialize all the defaults in your package.json. If you don’t use the flag,
+you have to decide how to configure the file. After initializing your npm project you are good to
+install new packages via npm install &lt;package&gt;.
+One more word about the package.json. The file enables you to share your project with other
+developers without sharing all the node packages. The file has all the references of node packages
+used in your project. These packages are called dependencies. Everyone can copy your project
+without the dependencies. The dependencies are references in the package.json. Someone who copies
+your project can simply install all packages by using npm install on the command line. The npm
+install script takes all the dependencies listed in the package.json file and installs them in the
+node_modules/ folder.
+I want to cover one more npm command:
+    </p>
+    <p>Command Line</p>
+    <pre>
+        npm install --save-dev &lt;package&gt;
+    </pre>
+    <p>
+        The --save-dev flag indicates that the node package is only used in the development environment.
+It will not be used in production when you deploy your application on a server. What kind of node
+package could that be? Imagine you want to test your application with the help of a node package.
+You need to install that package via npm, but want to exclude it from your production environment.
+Testing should only happen during the development process but not when your application is already
+running in production. There you don’t want to test your application anymore. It should be tested
+already and work out of the box for your users. That’s only one use case where you would want to
+use the --save-dev flag.
+You will encounter more npm commands on your way. But these will be sufficient for now.
+    </p>
+    <h1>Exercises:</h1>
+    <p>
+• setup a throw away npm project
+– create a new folder with mkdir &lt;folder_name&gt;
+– navigate into the folder with cd &lt;folder_name&gt;
+– execute npm init -y or npm init
+– install a local package like React with npm install react
+– have a look into the package.json file and the node_modules/ folder
+– find out on your own how to uninstall the react node package again
+    </p>
+    <h1>Installation</h1>
+    <p>
+        There are multiple approaches to get started with a React application.
+The first one is to use a CDN. That may sound more complicated than it is. A CDN is a content
+delivery network44. Several companies have CDNs that host files publicly for people to consume
+them. These files can be libraries like React, because after all the bundled React library is only a
+react.js JavaScript file. It can be hosted somewhere and you can require it in your application.
+How to use a CDN to get started in React? You can inline the  &lt;script&gt; tag in your HTML that points
+to a CDN url. To get started in React you need two files (libraries): react and react-dom.
+    </p>
+    <pre>
+&lt;script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"&gt;&lt;/script&gt;
+&lt;script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.developmen\
+t.js"&gt;&lt;/script&gt;
+    </pre>
+    <p>
+        But why should you use a CDN when you have npm to install node packages such as React?
+When your application has a package.json file, you can install react and react-dom from the
+command line. The requirement is that the folder is initialized as npm project by using npm init
+-y with a package.json file. You can install multiple node packages in one line with npm.
+    </p>
+    <p>Command Line</p>
+    <pre>
+        npm install react react-dom
+    </pre>
+    <p>
+        That approach is often used to add React to an existing application that is managed with npm.
+Unfortunately that’s not everything. You would have to deal with Babel45 to make your application
+aware of JSX (the React syntax) and JavaScript ES6. Babel transpiles your code so that browsers can
+interpret JavaScript ES6 and JSX. Not all browsers are capable of interpreting the syntax. The setup
+includes a lot of configuration and tooling. It can be overwhelming for React newcomers to bother
+with all the configuration.
+Because of this reason, Facebook introduced create-react-app as a zero-configuration React solution.
+The next chapter will show you how to setup your application by using this bootstrapping tool.
+    </p>
+    <h1>Zero-Configuration Setup</h1>
+    <p>
+        In the Road to learn React, you will use create-react-app47 to bootstrap your application. It’s an
+opinionated yet zero-configuration starter kit for React introduced by Facebook in 2016. People
+would recommend it to beginners by 96%48. In create-react-app the tooling and configuration evolve
+in the background while the focus is on the application implementation.
+To get started, you will have to install the package to your global node packages. After that, you
+always have it available on the command line to bootstrap new React applications.
+    </p>
+    <p>Command Line</p>
+    <pre>
+        npm install -g create-react-app
+    </pre>
+    <p>
+        You can check the version of create-react-app to verify a successful installation on your command
+line:
+    </p>
+    <p>Command Line</p>
+    <pre>
+        create-react-app --version
+       *v1.5.1
+    </pre>
+    <p>
+        Now you can bootstrap your first React application. We call it hackernews, but you can choose a
+different name. The bootstrapping takes a couple of seconds. Afterward, simply navigate into the
+folder:
+    </p>
+    <p>Command Line</p>
+    <pre>
+        create-react-app hackernews
+     cd hackernews
+    </pre>
+    <p>
+        Now you can open the application in your editor. The following folder structure, or a variation of it
+depending on the create-react-app version, should be presented to you:
+    </p>
+    <p>Folder Structure</p>
+    <pre>
+        hackernews/
+README.md
+node_modules/
+package.json
+.gitignore
+public/
+favicon.ico
+index.html
+manifest.json
+src/
+App.css
+App.js
+App.test.js
+index.css
+index.js
+logo.svg
+registerServiceWorker.js
+    </pre>
+    <p>
+        A short break down of the folder and files. It is fine if you don’t understand all of them in the
+beginning.
+    </p>
+    <ul>
+        <li> <b>• README.md: </b> The .md extension indicates that the file is a markdown file. Markdown is
+            used as a lightweight markup language with plain text formatting syntax. Many source code
+            projects come with a README.md file to give you initial instructions about the project. When
+            pushing your project to a platform such as GitHub eventually, the README.md file will show
+            its content prominently when you access the repository. Because you have used create-reactapp,
+            your README.md should be the same as shown in the official create-react-app GitHub
+            repository49.</li>
+            <li>
+                <b>node_modules/:</b> The folder has all the node packages that were and are installed via npm.
+Since you have used create-react-app, there should be already a couple of node modules
+installed for you. Usually you will never touch this folder, but only install and uninstall node
+packages with npm from the command line.
+            </li>
+            <li>
+                <b>package.json:</b> The file shows you a list of node package dependencies and other project
+configuration.
+            </li>
+            <li>
+                <b>• .gitignore: </b> The file indicates all files and folders that shouldn’t be added to your remote git
+repository when using git. They should only live in your local project. The node_modules/
+folder is such a use case. It is sufficient to share the package.json file with your peers to
+enable them to install all dependencies on their own without sharing the whole dependency
+folder.
+            </li>
+            <li>
+                <b>• public/:</b> The folder holds all your files when building your project for production. Eventually
+all your written code in the src/ folder will be bundled into a couple of files when building
+your project and placed in the public folder.
+            </li>
+            <li>
+                <b>• manifest.json and registerServiceWorker.js:</b> don’t worry about what these files do at this
+stage, we won’t be needing them in this project.
+            </li>
+    </ul>
+    <p>
+        After all, you don’t need to touch the mentioned files and folders. In the beginning everything you
+need is located in the src/ folder. The main focus lies on the src/App.js file to implement React
+components. It will be used to implement your application, but later you might want to split up
+your components into multiple files whereas each file maintains one or a few components on its
+own.
+    </p>
+    <p>
+        Additionally, you will find a src/App.test.js file for your tests and a src/index.js as entry point to the
+React world. You will get to know both files in a later chapter. In addition, there is a src/index.css
+and a src/App.css file to style your general application and your components. They all come with
+default style when you open them.
+    </p>
+    <p>The create-react-app application is a npm project. You can use npm to install and uninstall node
+        packages to your project. Additionally it comes with the following npm scripts for your command
+        line:</p>
+        <p>Command Line</p>
+        <pre>
+            // Runs the application in http://localhost:3000
+npm start
+// Runs the tests
+npm test
+// Builds the application for production
+npm run build
+        </pre>
+        <p>The scripts are defined in your package.json. Your boilerplate React application is bootstrapped now.
+            The exciting part comes in the exercises to finally run your bootstrapped application in the browser.</p>
+        <a href="jsx.html"> chapitre2:Introduction to JSX</a>
+</body>
+</html>
