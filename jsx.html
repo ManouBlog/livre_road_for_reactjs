@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,15 +8,16 @@
     <link rel="stylesheet" href="style.css">
     <title>Introduction to JSX</title>
 </head>
+
 <body>
-    <a href="index.html"> chapitre1:Foreword</a> 
+    <a href="index.html"> chapitre1:Foreword</a>
     <h1>Introduction to JSX</h1>
     <p>Now you will get to know JSX. It is the syntax in React. As mentioned before, create-react-app has
         already bootstrapped a boilerplate application for you. All files come with default implementations.
         Let’s dive into the source code. The only file you will touch in the beginning will be the src/App.js
         file.</p>
-        <p>src/App.js</p>
-        <pre>
+    <p>src/App.js</p>
+    <pre translate="no">
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
@@ -36,27 +38,28 @@ To get started, edit &lt;code&gt;src/App.js&lt;/code&gt; and save to reload.
 }
 export default App;
         </pre>
-        <p>
-            Don’t let yourself get confused by the import/export statements and class declaration. These features
-are already JavaScript ES6. We will revisit those in a later chapter.
-In the file you have an React ES6 class component with the name App. It is a component declaration.
-Basically after you have declared a component, you can use it as element everywhere in your
-application. It will produce an instance of your component or in other words: the component gets
-instantiated
-        </p>
-        <p>
-            The element it returns is specified in the render() method. Elements are what components are
-made of. It is useful to understand the differences between component, instance and element.
-Pretty soon, you will see where the App component is instantiated. Otherwise you wouldn’t see the
-rendered output in the browser, would you? The App component is only the declaration, but not the
-usage. You would instantiate the component somewhere in your JSX with &lt;App /&gt;.
-        </p>
-        <p>The content in the render block looks pretty similar to HTML, but it’s JSX. JSX allows you to mix
-            HTML and JavaScript. It’s powerful yet confusing when you are used to separating your HTML and
-            JavaScript. That’s why a good starting point is to use basic HTML in your JSX. In the beginning,
-            remove all the distracting content in the file.<p>
-            <p>src/App.js</p>
-    <pre>
+    <p>
+        Don’t let yourself get confused by the import/export statements and class declaration. These features
+        are already JavaScript ES6. We will revisit those in a later chapter.
+        In the file you have an React ES6 class component with the name App. It is a component declaration.
+        Basically after you have declared a component, you can use it as element everywhere in your
+        application. It will produce an instance of your component or in other words: the component gets
+        instantiated
+    </p>
+    <p>
+        The element it returns is specified in the render() method. Elements are what components are
+        made of. It is useful to understand the differences between component, instance and element.
+        Pretty soon, you will see where the App component is instantiated. Otherwise you wouldn’t see the
+        rendered output in the browser, would you? The App component is only the declaration, but not the
+        usage. You would instantiate the component somewhere in your JSX with &lt;App /&gt;.
+    </p>
+    <p>The content in the render block looks pretty similar to HTML, but it’s JSX. JSX allows you to mix
+        HTML and JavaScript. It’s powerful yet confusing when you are used to separating your HTML and
+        JavaScript. That’s why a good starting point is to use basic HTML in your JSX. In the beginning,
+        remove all the distracting content in the file.
+    <p>
+    <p>src/App.js</p>
+    <pre translate="no">
  import React, { Component } from 'react';
 import './App.css';
 class App extends Component {
@@ -73,9 +76,9 @@ export default App;
     <p>Now, you only return HTML in your render() method without JavaScript. Let’s define the
         “Welcome to the Road to learn React” as a variable. A variable can be used in your JSX by using
         curly braces.</p>
-        <p>src/App.js</p>
-        <pre>
-            import React, { Component } from 'react';
+    <p>src/App.js</p>
+    <pre translate="no">
+import React, { Component } from 'react';
 import './App.css';
 class App extends Component {
 render() {
@@ -89,14 +92,15 @@ return (
 }
 export default App;
         </pre>
-        <p>
-            It should work when you start your application on the command line with npm start again.
-Additionally you might have noticed the className attribute. It reflects the standard class attribute
-in HTML. Because of technical reasons, JSX had to replace a handful of internal HTML attributes.
-You can find all of the supported HTML attributes in the React documentation52. They all follow the
-camelCase convention. On your way to learn React, you will come across some more JSX specific
-attributes.
-        </p>
-        <a href="es6.html"> chapitre3:ES6 const and let</a>
+    <p>
+        It should work when you start your application on the command line with npm start again.
+        Additionally you might have noticed the className attribute. It reflects the standard class attribute
+        in HTML. Because of technical reasons, JSX had to replace a handful of internal HTML attributes.
+        You can find all of the supported HTML attributes in the React documentation52. They all follow the
+        camelCase convention. On your way to learn React, you will come across some more JSX specific
+        attributes.
+    </p>
+    <a href="es6.html"> chapitre3:ES6 const and let</a>
 </body>
+
 </html>

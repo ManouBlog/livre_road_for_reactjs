@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -7,13 +8,14 @@
     <link rel="stylesheet" href="style.css">
     <title>ReactDOM</title>
 </head>
+
 <body>
-    <a href="es6.html"> chapitre3:ES6 const and let</a> 
+    <a href="es6.html"> chapitre3:ES6 const and let</a>
     <h1>ReactDOM</h1>
     <P>Before you continue with the App component, you might want to see where it is used. It is located
         in your entry point to the React world: the src/index.js file.</P>
-        <p>src/index.js</p>
-        <pre>
+    <p>src/index.js</p>
+    <pre translate="no">
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -23,38 +25,38 @@ ReactDOM.render(
 document.getElementById('root')
 );
         </pre>
-        <p>
-            Basically ReactDOM.render() uses a DOM node in your HTML to replace it with your JSX.
-That’s how you can easily integrate React in every foreign application. It is not forbidden to use
-ReactDOM.render() multiple times across your application. You can use it at multiple places to
-bootstrap simple JSX syntax, a React component, multiple React components or a whole application.
-But in plain React application you will only use it once to bootstrap your whole component tree.
-ReactDOM.render() expects two arguments. The first argument is JSX that gets rendered. The second
-argument specifies the place where the React application hooks into your HTML. It expects an
-element with an id='root'. You can open your public/index.html file to find the id attribute.
-In the implementation ReactDOM.render() already takes your App component. However, it would
-be fine to pass simpler JSX as long as it is JSX. It doesn’t have to be an instantiation of a component.
-        </p>
-        <pre>
+    <p>
+        Basically ReactDOM.render() uses a DOM node in your HTML to replace it with your JSX.
+        That’s how you can easily integrate React in every foreign application. It is not forbidden to use
+        ReactDOM.render() multiple times across your application. You can use it at multiple places to
+        bootstrap simple JSX syntax, a React component, multiple React components or a whole application.
+        But in plain React application you will only use it once to bootstrap your whole component tree.
+        ReactDOM.render() expects two arguments. The first argument is JSX that gets rendered. The second
+        argument specifies the place where the React application hooks into your HTML. It expects an
+        element with an id='root'. You can open your public/index.html file to find the id attribute.
+        In the implementation ReactDOM.render() already takes your App component. However, it would
+        be fine to pass simpler JSX as long as it is JSX. It doesn’t have to be an instantiation of a component.
+    </p>
+    <pre translate="no">
 ReactDOM.render(
 &lt;h1&gt;Hello React World&lt;/h1&gt;,
 document.getElementById('root')
 );
         </pre>
-        <h1>Hot Module Replacement</h1>
-        <p>
-            There is one thing that you can do in the src/index.js file to improve your development experience as
-a developer. But it is optional and shouldn’t overwhelm you in the beginning when learning React.
-In create-react-app it is already an advantage that the browser automatically refreshes the page
-when you change your source code. Try it by changing the helloWorld variable in your src/App.js
-file. The browser should refresh the page. But there is a better way of doing it.
-Hot Module Replacement (HMR) is a tool to reload your application in the browser. The browser
-doesn’t perform a page refresh. You can easily activate it in create-react-app. In your src/index.js,
-your entry point to React, you have to add one little configuration.
-        </p>
-        <p>src/index.js</p>
-        <pre>
-            import React from 'react';
+    <h1>Hot Module Replacement</h1>
+    <p>
+        There is one thing that you can do in the src/index.js file to improve your development experience as
+        a developer. But it is optional and shouldn’t overwhelm you in the beginning when learning React.
+        In create-react-app it is already an advantage that the browser automatically refreshes the page
+        when you change your source code. Try it by changing the helloWorld variable in your src/App.js
+        file. The browser should refresh the page. But there is a better way of doing it.
+        Hot Module Replacement (HMR) is a tool to reload your application in the browser. The browser
+        doesn’t perform a page refresh. You can easily activate it in create-react-app. In your src/index.js,
+        your entry point to React, you have to add one little configuration.
+    </p>
+    <p>src/index.js</p>
+    <pre translate="no">
+import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import './index.css';
@@ -66,30 +68,31 @@ if (module.hot) {
 module.hot.accept();
 }
         </pre>
-        <p>
-            That’s it. Try again to change the helloWorld variable in your src/App.js file. The browser shouldn’t
-perform a page refresh, but the application reloads and shows the correct output. HMR comes with
-multiple advantages:
-Imagine you are debugging your code with console.log() statements. These statements will stay
-in your developer console, even though you change your code, because the browser doesn’t refresh
-the page anymore. That can be convenient for debugging purposes.
-In a growing application a page refresh delays your productivity. You have to wait until the
-page loads. A page reload can take several seconds in a large application. HMR takes away this
-disadvantage.
-The biggest benefit is that you can keep the application state with HMR. Imagine you have a dialog
-in your application with multiple steps and you are at step 3. Basically it is a wizard. Without HMR
-you would change the source code and your browser refreshes the page. You would have to open
-the dialog again and would have to navigate from step 1 to step 3. With HMR your dialog stays open at step 3. It keeps the application state even though the source code changes. The application itself
-reloads, but not the page
-        </p>
-        <h1>
-            Complex JavaScript in JSX
-        </h1>
-        <p>Let’s get back to your App component. So far you rendered some primitive variables in your JSX.
-            Now you will start to render a list of items. The list will be sample data in the beginning, but later
-            you will fetch the data from an external API59. That will be far more exciting.
-            First you have to define the list of items.</p>
-    <pre>
+    <p>
+        That’s it. Try again to change the helloWorld variable in your src/App.js file. The browser shouldn’t
+        perform a page refresh, but the application reloads and shows the correct output. HMR comes with
+        multiple advantages:
+        Imagine you are debugging your code with console.log() statements. These statements will stay
+        in your developer console, even though you change your code, because the browser doesn’t refresh
+        the page anymore. That can be convenient for debugging purposes.
+        In a growing application a page refresh delays your productivity. You have to wait until the
+        page loads. A page reload can take several seconds in a large application. HMR takes away this
+        disadvantage.
+        The biggest benefit is that you can keep the application state with HMR. Imagine you have a dialog
+        in your application with multiple steps and you are at step 3. Basically it is a wizard. Without HMR
+        you would change the source code and your browser refreshes the page. You would have to open
+        the dialog again and would have to navigate from step 1 to step 3. With HMR your dialog stays open at step 3. It
+        keeps the application state even though the source code changes. The application itself
+        reloads, but not the page
+    </p>
+    <h1>
+        Complex JavaScript in JSX
+    </h1>
+    <p>Let’s get back to your App component. So far you rendered some primitive variables in your JSX.
+        Now you will start to render a list of items. The list will be sample data in the beginning, but later
+        you will fetch the data from an external API59. That will be far more exciting.
+        First you have to define the list of items.</p>
+    <pre translate="no">
         import React, { Component } from 'react';
 import './App.css';
 const list = [
@@ -116,14 +119,14 @@ class App extends Component {
     </pre>
     <p>
         The sample data will reflect the data we will fetch later on from the API. An item in the list has
-a title, an url and an author. Additionally it comes with an identifier, points (which indicate how
-popular an article is) and a count of comments.
-Now you can use the built-in JavaScript map functionality in your JSX. It enables you to iterate over
-your list of items to display them. Again you will use curly braces to encapsulate the JavaScript
-expression in your JSX.
+        a title, an url and an author. Additionally it comes with an identifier, points (which indicate how
+        popular an article is) and a count of comments.
+        Now you can use the built-in JavaScript map functionality in your JSX. It enables you to iterate over
+        your list of items to display them. Again you will use curly braces to encapsulate the JavaScript
+        expression in your JSX.
     </p>
     <p>src/App.js</p>
-    <pre>
+    <pre translate="no">
         class App extends Component {
             render() {
             return (
@@ -139,12 +142,12 @@ expression in your JSX.
     </pre>
     <p>
         Using JavaScript in HTML is pretty powerful in JSX. Usually you might have used map to convert
-one list of items to another list of items. This time you use map to convert a list of items to HTML
-elements.
-So far, only the title will be displayed for each item. Let’s display some more of the item properties.
+        one list of items to another list of items. This time you use map to convert a list of items to HTML
+        elements.
+        So far, only the title will be displayed for each item. Let’s display some more of the item properties.
     </p>
     <p>src/App.js</p>
-    <pre>
+    <pre translate="no">
         class App extends Component {
             render() {
             return (
@@ -174,7 +177,7 @@ So far, only the title will be displayed for each item. Let’s display some mor
         list element. That way React is able to identify added, changed and removed items when the list
         changes. The sample list items come with an identifier already.</p>
     <p>src/App.js</p>
-    <pre>
+    <pre translate="no">
         {list.map(function(item) {
             return (
            &lt;div key={item.objectID}&gt;
@@ -191,8 +194,8 @@ So far, only the title will be displayed for each item. Let’s display some mor
     <p>You should make sure that the key attribute is a stable identifier. Don’t make the mistake of using
         index of the item in the array. The array index isn’t stable at all. For instance, when the list changes
         its order, React will have a hard time identifying the items properly.</p>
-<p>src/App.js</p>
-<pre>
+    <p>src/App.js</p>
+    <pre translate="no">
     // don't do this
 {list.map(function(item, key) {
 return (
@@ -202,16 +205,16 @@ return (
 );
 })}
 </pre>
-<p>
-    You are displaying both list items now. You can start your app, open your browser and see both
-items of the list displayed
-</p>
-<h1>
-    ES6 Arrow Functions
-</h1>
-<p>JavaScript ES6 introduced arrow functions. An arrow function expression is shorter than a function
-    expression.</p>
-<pre>// function expression
+    <p>
+        You are displaying both list items now. You can start your app, open your browser and see both
+        items of the list displayed
+    </p>
+    <h1>
+        ES6 Arrow Functions
+    </h1>
+    <p>JavaScript ES6 introduced arrow functions. An arrow function expression is shorter than a function
+        expression.</p>
+    <pre translate="no">// function expression
     function () { ... }
     // arrow function expression
     () => { ... }</pre>
@@ -222,8 +225,8 @@ items of the list displayed
         There is another valuable fact about arrow functions regarding the parentheses. You can remove the
         parentheses when the function gets only one argument, but have to keep them when it gets multiple
         arguments.</p>
-    <pre>
-        // allowed
+    <pre translate="no">
+// allowed
 item => { ... }
 // allowed
 (item) => { ... }
@@ -234,8 +237,8 @@ item, key => { ... }
     </pre>
     <p>However, let’s have a look at the map function. You can write it more concisely with an ES6 arrow
         function.</p>
-        <p>src/App.js</p>
-        <pre>
+    <p>src/App.js</p>
+    <pre translate="no">
             {list.map(item => {
                 return (
                &lt;div key={item.objectID}&gt;
@@ -249,13 +252,13 @@ item, key => { ... }
                 );
                 })}
         </pre>
-        <p>
-            Additionally, you can remove the block body, meaning the curly braces, of the ES6 arrow function.
-In a concise body an implicit return is attached. Thus you can remove the return statement. That
-will happen more often in the book, so be sure to understand the difference between a block body
-and a concise body when using arrow functions.
-        </p>
-        <pre>
+    <p>
+        Additionally, you can remove the block body, meaning the curly braces, of the ES6 arrow function.
+        In a concise body an implicit return is attached. Thus you can remove the return statement. That
+        will happen more often in the book, so be sure to understand the difference between a block body
+        and a concise body when using arrow functions.
+    </p>
+    <pre translate="no">
             {list.map(item =>
                 &lt;div key={item.objectID}&gt;
                 &lt;span&gt;
@@ -267,22 +270,22 @@ and a concise body when using arrow functions.
                 &lt;/div&gt;
                 )}
         </pre>
-        <p>Your JSX looks more concise and readable now. It omits the function statement, the curly braces and
-            the return statement. Instead a developer can focus on the implementation details.</p>
+    <p>Your JSX looks more concise and readable now. It omits the function statement, the curly braces and
+        the return statement. Instead a developer can focus on the implementation details.</p>
     <h1>
         ES6 Classes
     </h1>
     <p>
         JavaScript ES6 introduced classes. A class is commonly used in object-oriented programming
-languages. JavaScript was and is very flexible in its programming paradigms. You can do functional
-programming and object-oriented programming side by side for their particular use cases.
-Even though React embraces functional programming, for instance with immutable data structures,
-classes are used to declare components. They are called ES6 class components. React mixes the good
-parts of both programming paradigms.
-Let’s consider the following Developer class to examine a JavaScript ES6 class without thinking
-about a component.
+        languages. JavaScript was and is very flexible in its programming paradigms. You can do functional
+        programming and object-oriented programming side by side for their particular use cases.
+        Even though React embraces functional programming, for instance with immutable data structures,
+        classes are used to declare components. They are called ES6 class components. React mixes the good
+        parts of both programming paradigms.
+        Let’s consider the following Developer class to examine a JavaScript ES6 class without thinking
+        about a component.
     </p>
-    <pre>
+    <pre translate="no">
         class Developer {
             constructor(firstname, lastname) {
             this.firstname = firstname;
@@ -295,23 +298,23 @@ about a component.
     </pre>
     <p>
         A class has a constructor to make it instantiable. The constructor can take arguments to assign it to
-the class instance. Additionally a class can define functions. Because the function is associated with
-a class, it is called a method. Often it is referenced as a class method.
-The Developer class is only the class declaration. You can create multiple instances of the class by
-invoking it. It is similar to the ES6 class component, that has a declaration, but you have to use it
-somewhere else to instantiate it.
-Let’s see how you can instantiate the class and how you can use its methods.
+        the class instance. Additionally a class can define functions. Because the function is associated with
+        a class, it is called a method. Often it is referenced as a class method.
+        The Developer class is only the class declaration. You can create multiple instances of the class by
+        invoking it. It is similar to the ES6 class component, that has a declaration, but you have to use it
+        somewhere else to instantiate it.
+        Let’s see how you can instantiate the class and how you can use its methods.
     </p>
-    <pre>
+    <pre translate="no">
 const robin = new Developer('Robin', 'Wieruch');
 console.log(robin.getName());
 // output: Robin Wieruch
     </pre>
     <p>
         React uses JavaScript ES6 classes for ES6 class components. You already used one ES6 class
-component.
+        component.
     </p>
-    <pre>
+    <pre translate="no">
 import React, { Component } from 'react';
 ...
 class App extends Component {
@@ -322,22 +325,22 @@ render() {
     </pre>
     <p>
         The App class extends from Component. Basically you declare the App component, but it extends
-from another component. What does extend mean? In object-oriented programming you have the
-principle of inheritance. It is used to pass over functionalities from one class to another class.
-The App class extends functionality from the Component class. To be more specific, it inherits
-functionalities from the Component class. The Component class is used to extend a basic ES6 class
-to a ES6 component class. It has all the functionalities that a component in React needs to have. The
-render method is one of these functionalities that you have already used. You will learn about other
-component class methods later on.
-The Component class encapsulates all the implementation details of a React component. It enables
-developers to use classes as components in React.
-The methods a React Component exposes is the public interface. One of these methods has to be
-overridden, the others don’t need to be overridden. You will learn about the latter ones when the
-book arrives at lifecycle methods in a later chapter. The render() method has to be overridden,
-because it defines the output of a React Component. It has to be defined.
-Now you know the basics around JavaScript ES6 classes and how they are used in React to extend
-them to components. You will learn more about the Component methods when the book describes
-React lifecycle methods.
+        from another component. What does extend mean? In object-oriented programming you have the
+        principle of inheritance. It is used to pass over functionalities from one class to another class.
+        The App class extends functionality from the Component class. To be more specific, it inherits
+        functionalities from the Component class. The Component class is used to extend a basic ES6 class
+        to a ES6 component class. It has all the functionalities that a component in React needs to have. The
+        render method is one of these functionalities that you have already used. You will learn about other
+        component class methods later on.
+        The Component class encapsulates all the implementation details of a React component. It enables
+        developers to use classes as components in React.
+        The methods a React Component exposes is the public interface. One of these methods has to be
+        overridden, the others don’t need to be overridden. You will learn about the latter ones when the
+        book arrives at lifecycle methods in a later chapter. The render() method has to be overridden,
+        because it defines the output of a React Component. It has to be defined.
+        Now you know the basics around JavaScript ES6 classes and how they are used in React to extend
+        them to components. You will learn more about the Component methods when the book describes
+        React lifecycle methods.
     </p>
     <p>
         You have learned to bootstrap your own React application! Let’s recap the last chapters
@@ -360,7 +363,8 @@ render methods
     <p>It makes sense to take a break at this point. Internalize the learnings and apply them on your own.
         You can experiment with the source code you have written so far. You can find the source code in
         the official repository64.</p>
-    
-        <a href="basic.html"> chapitre5:BASIC REACT</a> 
+
+    <a href="basic.html"> chapitre5:BASIC REACT</a>
 </body>
+
 </html>
